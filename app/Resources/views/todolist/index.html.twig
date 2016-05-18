@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>TodoList list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for todoList in todoLists %}
+            <tr>
+                <td><a href="{{ path('todolist_show', { 'id': todoList.id }) }}">{{ todoList.id }}</a></td>
+                <td>{{ todoList.name }}</td>
+                <td>{{ todoList.type }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('todolist_show', { 'id': todoList.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('todolist_edit', { 'id': todoList.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('todolist_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -39,3 +39,6 @@
 
 # Composer PHAR
 /composer.phar
+
+#Doctrine entity backups
+*.php~

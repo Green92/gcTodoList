@@ -3,6 +3,7 @@
 namespace TodoListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collection\ArrayCollection;
 
 /**
  * List
@@ -39,6 +40,22 @@ class TodoList
      */
     private $type;
 
+    /**
+     * Todos of this list.
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Todo", mappedBy="list")
+     */
+    private $todos;
+
+    /**
+     * Constructor.
+     *
+     */
+    public function __construct() {
+        $this->todos = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -96,5 +113,39 @@ class TodoList
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Add todo
+     *
+     * @param Todo $todo
+     *
+     * @return TodoList
+     */
+    public function addTodo(Todo $todo)
+    {
+        $this->todos[] = $todo;
+
+        return $this;
+    }
+
+    /**
+     * Remove todo
+     *
+     * @param Todo $todo
+     */
+    public function removeTodo(Todo $todo)
+    {
+        $this->todos->removeElement($todo);
+    }
+
+    /**
+     * Get todos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTodos()
+    {
+        return $this->todos;
     }
 }

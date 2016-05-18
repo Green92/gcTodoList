@@ -49,9 +49,9 @@ class CommonDoctrineRepository
 	 * Contructor.
 	 *
 	 * @param EntityRepository $doctrineRepository
-	 * @param $entityName
+	 * @param string $entityName
 	 */
-	public function __construct(EntityManager $doctrineEntityManager, $entityName) 
+	public function __construct(EntityManager $doctrineEntityManager, string $entityName) 
 	{
 		$this->doctrineEntityManager = $doctrineEntityManager;
 		$this->doctrineRepository = $this->doctrineEntityManager->getRepository($entityName);

@@ -4,13 +4,15 @@ services:
 #        arguments: ["@service_id", "plain_value", %parameter%]
 
     todo_list.doctrine_todo_list_repository:
-        class: TodoListBundle\Repopsitory\DoctrineTodoListRepository
+        class: TodoListBundle\Repository\DoctrineTodoListRepository
         arguments: ["@doctrine.orm.entity_manager"]
 
     todo_list.doctrine_todo_repository:
-        class: TodoListBundle\Repopsitory\DoctrineTodoRepository
+        class: TodoListBundle\Repository\DoctrineTodoRepository
         arguments: ["@doctrine.orm.entity_manager"]
 
     todo_list.todo_list_controller:
         class: TodoListBundle\Controller\TodoListController
         arguments: ["@todo_list.doctrine_todo_list_repository"]
+        calls: 
+            - [setContainer, ["@service_container"]]

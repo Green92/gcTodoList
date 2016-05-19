@@ -14,7 +14,7 @@ use TodoListBundle\Repository\DoctrineTodoListRepository;
 /**
  * TodoList controller.
  *
- * @Route("/todolist")
+ * @Route("/todolist", service="todo_list.todo_list_controller")
  */
 class TodoListController extends Controller
 {
@@ -28,7 +28,7 @@ class TodoListController extends Controller
      *
      * @param ITodoListRepository $todolistRepository;
      */
-    public function __construct(ITodoListRepository $todoListRepository)
+    public function __construct($todoListRepository)
     {
         $this->todoListRepository = $todoListRepository;
     }
@@ -41,7 +41,7 @@ class TodoListController extends Controller
      */
     public function indexAction()
     {
-        $todoLists = $todoListRepository->findAll();
+        $todoLists = $this->todoListRepository->findAll();
 
         return $this->render('todolist/index.html.twig', array(
             'todoLists' => $todoLists,

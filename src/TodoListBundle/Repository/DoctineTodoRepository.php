@@ -2,7 +2,7 @@
 
 namespace TodoListBundle\Repository;
 
-class DoctrineTodoRepository extends CommonDoctrineRepository
+class DoctrineTodoRepository extends CommonDoctrineRepository implements ITodoRepository
 {
 	/**
 	 * Constructor.
@@ -13,4 +13,6 @@ class DoctrineTodoRepository extends CommonDoctrineRepository
 	{
 		parent::__construct($doctrineEntityManager, 'TodoListBundle\Entity\Todo');
 	}
+
+	
 }

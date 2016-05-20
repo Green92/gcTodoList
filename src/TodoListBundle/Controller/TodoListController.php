@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use TodoListBundle\Entity\TodoList;
 use TodoListBundle\Form\TodoListType;
 
-use TodoListBundle\Repository\DoctrineTodoListRepository;
+use TodoListBundle\Repository\ITodoListRepository;
 
 /**
  * TodoList controller.
@@ -26,9 +26,9 @@ class TodoListController extends Controller
     /**
      * Constructor
      *
-     * @param ITodoListRepository $todolistRepository;
+     * @param ITodoListRepository $todoListRepository;
      */
-    public function __construct($todoListRepository)
+    public function __construct(ITodoListRepository $todoListRepository)
     {
         $this->todoListRepository = $todoListRepository;
     }

@@ -17,3 +17,10 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    application_name: gctodolist
+    oauth2_client_id: ~
+    oauth2_client_secret: ~
+    oauth2_redirect_uri: ~
+    developer_key: ~
+    site_name: ~

@@ -16,3 +16,9 @@ services:
         arguments: ["@todo_list.doctrine_todo_list_repository"]
         calls: 
             - [setContainer, ["@service_container"]]
+
+    todo_list.todo_controller:
+        class: TodoListBundle\Controller\TodoController
+        arguments: ["@todo_list.doctrine_todo_repository"]
+        calls: 
+            - [setContainer, ["@service_container"]]

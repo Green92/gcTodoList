@@ -2,6 +2,8 @@
 
 namespace TodoListBundle\Repository;
 
+use Doctrine\ORM\EntityManager;
+
 class DoctrineTodoRepository extends CommonDoctrineRepository implements ITodoRepository
 {
 	/**

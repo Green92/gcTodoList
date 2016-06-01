@@ -148,4 +148,9 @@ class TodoList
     {
         return $this->todos;
     }
+
+    public function __toString()
+    {
+        return $this->type.':'.$this->name;
+    }
 }

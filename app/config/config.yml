@@ -67,3 +67,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+happy_r_google_api:
+  application_name: %application_name%
+  oauth2_client_id: %oauth2_client_id%
+  oauth2_client_secret: %oauth2_client_secret%
+  oauth2_redirect_uri: %oauth2_redirect_uri%
+  developer_key: %developer_key%
+  site_name: %site_name%

@@ -14,7 +14,15 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            pattern: ^/
+            simple_preauth:
+                authenticator: todo_list.api_key_authenticator
+            access_denied_handler: todo_list.access_denied_handler
+
+    access_control:
+        - { path: ^/oauth/callback$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_HAS_TOKEN }
+
             # activate different ways to authenticate
 
             # http_basic: ~

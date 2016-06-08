@@ -11,6 +11,21 @@ services:
         class: TodoListBundle\Repository\DoctrineTodoRepository
         arguments: ["@doctrine.orm.entity_manager"]
 
+    todo_list.google.client:
+        class: TodoListBundle\Google\Client
+        arguments: ["@happyr.google.api.client"]
+
+    todo_list.access_denied_handler:
+        class: TodoListBundle\Security\Handler\AccesDeniedHandler
+        arguments: ["@todo_list.google.client"]
+
+    todo_list.api_key_authenticator:
+        class: TodoListBundle\Security\ApiKeyAuthenticator
+
+    todo_list.gtaskapi_todo_repository:
+        class: TodoListBundle\Repository\GTaskApiTodoRepository
+        arguments: ["@todo_list.google.client"]
+
     todo_list.todo_list_controller:
         class: TodoListBundle\Controller\TodoListController
         arguments: ["@todo_list.doctrine_todo_list_repository"]
@@ -19,6 +34,12 @@ services:
 
     todo_list.todo_controller:
         class: TodoListBundle\Controller\TodoController
-        arguments: ["@todo_list.doctrine_todo_repository"]
+        arguments: ["@todo_list.gtaskapi_todo_repository"]
+        calls: 
+            - [setContainer, ["@service_container"]]
+
+    todo_list.oauth_controller:
+        class: TodoListBundle\Controller\OAuthController
+        arguments: ["@todo_list.google.client"]
         calls: 
             - [setContainer, ["@service_container"]]

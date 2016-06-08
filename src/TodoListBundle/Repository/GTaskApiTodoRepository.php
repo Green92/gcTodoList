@@ -2,7 +2,7 @@
 
 namespace TodoListBundle\Repository;
 
-use HappyR\Google\ApiBundle\Services\GoogleClient;
+use TodoListBundle\Google\Client;
 
 use TodoListBundle\Exception\NotImplementedException;
 
@@ -13,12 +13,12 @@ class GTaskApiTodoRepository implements ITodoRepository
 	 */
 	private $taskService;
 
-	public function  __construct(GoogleClient $googleClient)
+	public function  __construct(Client $googleClient)
 	{
-		$this->taskService = new Google_Service_Tasks($googleClient);
+		//$this->taskService = new Google_Service_Tasks($googleClient);
 	}
 
-		/**
+	/**
 	 * Gives all entities.
 	 */
 	public function findAll($offset = 0, $limit = null) {

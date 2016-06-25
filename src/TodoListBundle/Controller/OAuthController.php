@@ -5,6 +5,7 @@ namespace TodoListBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -28,7 +29,12 @@ class OAuthController extends Controller
      */
     public function OAuthCallbackAction(Request $request)
     {
+        if ($request->query->get('error', null) != null) {
+            return new Response('Erreur');
+        }
+
         $this->client->authenticate($request->query->get("code", null));
+
         return new RedirectResponse($this->get('router')->generate("home", array()));
     }
 }

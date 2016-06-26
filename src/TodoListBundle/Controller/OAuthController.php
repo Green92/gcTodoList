@@ -36,14 +36,14 @@ class OAuthController extends Controller
 
         $this->client->authenticate($request->query->get("code", null));
 
-        $accessToken = $this->client->getAccesToken();
+        $accessToken = $this->client->getAccessToken();
 
-        $securityContext = $this->get('security.token_storage');
+        $tokenStorage = $this->get('security.token_storage');
 
-        $token = $securityContext->getToken();
+        $token = $tokenStorage->getToken();
         $token = new PreAuthenticatedToken(json_encode($accessToken), $token->getCredentials(), $token->getProviderKey(), ['ROLE_HAS_TOKEN']);
 
-        $securityContext->setToken($token);
+        $tokenStorage->setToken($token);
 
         return new RedirectResponse($this->get('router')->generate("home", array()));
     }

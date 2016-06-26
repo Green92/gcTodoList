@@ -15,7 +15,7 @@ interface ICommonRepository
 	 *
 	 * @param $id int
 	 */
-	public function getById($id);
+	public function getById($id, $taskId = null);
 
 	/**
 	 * Save or update an entity.

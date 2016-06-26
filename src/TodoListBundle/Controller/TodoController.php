@@ -56,9 +56,7 @@ class TodoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($todo);
-            $em->flush();
+            $this->todoRepository->persist($todo);
 
             return $this->redirectToRoute('todo_show', array('id' => $todo->getId()));
         }

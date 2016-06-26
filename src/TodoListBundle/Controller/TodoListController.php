@@ -61,9 +61,7 @@ class TodoListController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($todoList);
-            $em->flush();
+            $this->todoListRepository->persist($todoList);
 
             return $this->redirectToRoute('todolist_show', array('id' => $todoList->getId()));
         }
@@ -80,8 +78,10 @@ class TodoListController extends Controller
      * @Route("/{id}", name="todolist_show")
      * @Method("GET")
      */
-    public function showAction(TodoList $todoList)
+    public function showAction($id)
     {
+        $todoList = $this->todoListRepository->getById($id);
+
         $deleteForm = $this->createDeleteForm($todoList);
 
         return $this->render('todolist/show.html.twig', array(
@@ -96,16 +96,15 @@ class TodoListController extends Controller
      * @Route("/{id}/edit", name="todolist_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, TodoList $todoList)
+    public function editAction(Request $request, $id)
     {
+        $todoList = $this->todoListRepository->getById($id);
         $deleteForm = $this->createDeleteForm($todoList);
         $editForm = $this->createForm('TodoListBundle\Form\TodoListType', $todoList);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($todoList);
-            $em->flush();
+            $this->todoListRepository->persist($todoList);
 
             return $this->redirectToRoute('todolist_edit', array('id' => $todoList->getId()));
         }
@@ -123,15 +122,14 @@ class TodoListController extends Controller
      * @Route("/{id}", name="todolist_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, TodoList $todoList)
+    public function deleteAction(Request $request, $id)
     {
+        $todoList = $this->todoListRepository->getById($id);
         $form = $this->createDeleteForm($todoList);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($todoList);
-            $em->flush();
+            $this->todoListRepository->delete($todoList);
         }
 
         return $this->redirectToRoute('todolist_index');

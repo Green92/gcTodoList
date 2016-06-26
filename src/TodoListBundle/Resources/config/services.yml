@@ -24,11 +24,15 @@ services:
 
     todo_list.gtaskapi_todo_repository:
         class: TodoListBundle\Repository\GTaskApiTodoRepository
-        arguments: ["@todo_list.google.client"]
+        arguments: ["@todo_list.google.client", "@security.token_storage"]
+
+    todo_list.gtaskapi_todo_list_repository:
+            class: TodoListBundle\Repository\GTaskApiTodoListRepository
+            arguments: ["@todo_list.google.client", "@security.token_storage"]
 
     todo_list.todo_list_controller:
         class: TodoListBundle\Controller\TodoListController
-        arguments: ["@todo_list.doctrine_todo_list_repository"]
+        arguments: ["@todo_list.gtaskapi_todo_list_repository"]
         calls: 
             - [setContainer, ["@service_container"]]
 

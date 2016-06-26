@@ -68,6 +68,20 @@ class TodoList
     }
 
     /**
+     * Set id
+     *
+     * @param int $id
+     *
+     * @return List
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Set name
      *
      * @param string $name

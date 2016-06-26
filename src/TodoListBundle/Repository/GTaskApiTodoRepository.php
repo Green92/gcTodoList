@@ -2,9 +2,11 @@
 
 namespace TodoListBundle\Repository;
 
+use TodoListBundle\Entity\Todo;
 use TodoListBundle\Google\Client;
+use Google_Service_Tasks;
+use Google_Service_Tasks_Task;
 
-use TodoListBundle\Exception\NotImplementedException;
 
 class GTaskApiTodoRepository implements ITodoRepository
 {
@@ -13,9 +15,38 @@ class GTaskApiTodoRepository implements ITodoRepository
 	 */
 	private $taskService;
 
-	public function  __construct(Client $googleClient)
+	private function convertTask2Todo($task) {
+		$todo =  new Todo();
+
+		if(isset($task->id)){
+			$todo->setId($task->id);
+		}
+
+		if (isset($task->title)) {
+			$todo->setDescription($task->title);
+		}
+
+		if (isset($task->done)) {
+			$todo->setDone($task->done);
+		}
+
+		return $todo;
+	}
+
+	private function convertTodo2Task(Todo $todo) {
+		$task =  new Google_Service_Tasks_Task();
+
+		$task->id = $todo->getId();
+		$task->title = $todo->getDescription();
+		$task->completed = $todo->getDone();
+
+		return $task;
+	}
+
+	public function  __construct(Client $googleClient, $tokenStorage)
 	{
-		//$this->taskService = new Google_Service_Tasks($googleClient);
+		$googleClient->setAccessToken(json_decode($tokenStorage->getToken()->getUser()));
+		$this->taskService = new Google_Service_Tasks($googleClient);
 	}
 
 	/**
@@ -31,8 +62,9 @@ class GTaskApiTodoRepository implements ITodoRepository
 	 *
 	 * @param $id int
 	 */
-	public function getById($id) {
-		throw new NotImplementedException();
+	public function getById($id, $taskListId = null) {
+		$task = $this->taskService->tasks->get($taskListId, $id);
+		return $this->convertTask2Todo($task);
 	}
 
 	/**
@@ -41,7 +73,11 @@ class GTaskApiTodoRepository implements ITodoRepository
 	 * @param $entity
 	 */
 	public function persist($entity) {
-		throw new NotImplementedException();
+		if ($entity->getId() == null) {
+			$this->taskService->tasks->insert($entity->getList()->getId(), $this->convertTodo2Task($entity));
+		} else {
+			$this->taskService->tasks->update($entity->getList()->getId(), $this->convertTodo2Task($entity));
+		}
 	}
 
 	/**
@@ -50,6 +86,6 @@ class GTaskApiTodoRepository implements ITodoRepository
 	 * @param $entity
 	 */
 	public function delete($entity) {
-		throw new NotImplementedException();
+		$this->taskService->tasks->delete($entity->getList()->getId(), $entity->getId());
 	}
 }

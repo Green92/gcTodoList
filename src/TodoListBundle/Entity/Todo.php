@@ -57,6 +57,16 @@ class Todo
     }
 
     /**
+     * Set id
+     *
+     * @return int
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Set description
      *
      * @param string $description

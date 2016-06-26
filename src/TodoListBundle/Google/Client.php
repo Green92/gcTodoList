@@ -4,6 +4,8 @@ namespace TodoListBundle\Google;
 
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
+use Google_Service_Tasks;
+
 class Client
 {
 	private $client;
@@ -23,7 +25,15 @@ class Client
 		$this->client->authenticate($code);
 	}
 
-	public function getAccesToken() {
+	public function getAccessToken() {
 		return $this->client->getAccessToken();
+	}
+
+	public function setAccessToken($token) {
+		return $this->client->setAccessToken($token);
+	}
+
+	public function getTaskService() {
+		return new Google_Service_Tasks($this->client->getGoogleClient());
 	}
 }

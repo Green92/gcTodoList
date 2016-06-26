@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use TodoListBundle\Google\Client;
 
 /**
@@ -34,6 +35,26 @@ class OAuthController extends Controller
         }
 
         $this->client->authenticate($request->query->get("code", null));
+
+        $accessToken = $this->client->getAccesToken();
+
+        $securityContext = $this->get('security.token_storage');
+
+        $token = $securityContext->getToken();
+        $token = new PreAuthenticatedToken(json_encode($accessToken), $token->getCredentials(), $token->getProviderKey(), ['ROLE_HAS_TOKEN']);
+
+        $securityContext->setToken($token);
+
+        return new RedirectResponse($this->get('router')->generate("home", array()));
+    }
+
+    /**
+     * @Route("/logout")
+     */
+    public function OAuthLogoutAction() {
+        $security = $this->get('security.token_storage');
+        $security->setToken(null);
+        $this->get('session')->invalidate();
 
         return new RedirectResponse($this->get('router')->generate("home", array()));
     }

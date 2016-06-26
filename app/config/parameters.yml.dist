@@ -21,6 +21,6 @@ parameters:
     application_name: gctodolist
     oauth2_client_id: ~
     oauth2_client_secret: ~
-    oauth2_redirect_uri: ~
+    oauth2_redirect_uri: http://localhost:8000/oauth/callback
     developer_key: ~
-    site_name: ~
+    site_name: localhost:8000

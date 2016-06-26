@@ -22,4 +22,8 @@ class Client
 	public function authenticate($code) {
 		$this->client->authenticate($code);
 	}
+
+	public function getAccesToken() {
+		return $this->client->getAccessToken();
+	}
 }

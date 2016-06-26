@@ -24,7 +24,7 @@ services:
 
     todo_list.gtaskapi_todo_repository:
         class: TodoListBundle\Repository\GTaskApiTodoRepository
-        arguments: ["@todo_list.google.client", "@security.token_storage"]
+        arguments: ["@todo_list.google.client", "@todo_list.gtaskapi_todo_list_repository", "@security.token_storage"]
 
     todo_list.gtaskapi_todo_list_repository:
             class: TodoListBundle\Repository\GTaskApiTodoListRepository

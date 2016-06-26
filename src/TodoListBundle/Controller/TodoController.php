@@ -90,16 +90,15 @@ class TodoController extends Controller
      * @Route("/{id}/edit", name="todo_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Todo $todo)
+    public function editAction(Request $request, $id)
     {
+        $todo = $this->todoRepository->getById($id, '@default');
         $deleteForm = $this->createDeleteForm($todo);
         $editForm = $this->createForm('TodoListBundle\Form\TodoType', $todo);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($todo);
-            $em->flush();
+            $this->todoRepository->persist($todo);
 
             return $this->redirectToRoute('todo_edit', array('id' => $todo->getId()));
         }
@@ -117,15 +116,14 @@ class TodoController extends Controller
      * @Route("/{id}", name="todo_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Todo $todo)
+    public function deleteAction(Request $request, $id)
     {
+        $todo = $this->todoRepository->getById($id, '@default');
         $form = $this->createDeleteForm($todo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($todo);
-            $em->flush();
+            $this->todoRepository->delete($todo);
         }
 
         return $this->redirectToRoute('todo_index');

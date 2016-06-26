@@ -14,6 +14,7 @@ class GTaskApiTodoRepository implements ITodoRepository
 	 * @var Google_Service_Tasks
 	 */
 	private $taskService;
+	private $todoRepository;
 
 	private function convertTask2Todo(Google_Service_Tasks_Task $task) {
 		$todo =  new Todo();
@@ -21,6 +22,8 @@ class GTaskApiTodoRepository implements ITodoRepository
 		$todo->setId($task->getId());
 		$todo->setDescription($task->getTitle());
 		$todo->setDone($task->getStatus() === 'completed');
+
+		$todo->setList($this->todoRepository->getById('@default'));
 
 		return $todo;
 	}
@@ -52,10 +55,11 @@ class GTaskApiTodoRepository implements ITodoRepository
 		return $task;
 	}
 
-	public function  __construct(Client $googleClient, $tokenStorage)
+	public function  __construct(Client $googleClient, ITodoListRepository $todoListRepository, $tokenStorage)
 	{
 		$googleClient->setAccessToken(json_decode($tokenStorage->getToken()->getUser(), true));
 		$this->taskService = $googleClient->getTaskService();
+		$this->todoRepository = $todoListRepository;
 	}
 
 	/**

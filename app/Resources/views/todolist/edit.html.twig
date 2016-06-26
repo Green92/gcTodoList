@@ -7,14 +7,14 @@
         {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
         {{ form_start(edit_form) }}
             {{ form_widget(edit_form) }}
-            <input type="submit" value="Edit" class="btn btn-default pull-right" />
+            <input type="submit" value="Save" class="btn btn-default pull-right" />
         {{ form_end(edit_form) }}
         {{ form_start(delete_form) }}
         <input type="submit" value="Delete" class="btn btn-default">
         {{ form_end(delete_form) }}
     </div>
-    
-    <div class="col-xs-12">
-        <a href="{{ path('todolist_index') }}" class="btn btn-default">Back to the list</a>
+
+    <div class="clearfix">
+        <a href="{{ path('todolist_index') }}" class="btn btn-default pull-right">Back to the list</a>
     </div>
 {% endblock %}

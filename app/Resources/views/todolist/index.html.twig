@@ -3,39 +3,24 @@
 {% block body %}
     <h1>TodoList list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <ul class="list-group">
         {% for todoList in todoLists %}
-            <tr>
-                <td><a href="{{ path('todolist_show', { 'id': todoList.id }) }}">{{ todoList.id }}</a></td>
-                <td>{{ todoList.name }}</td>
-                <td>{{ todoList.type }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('todolist_show', { 'id': todoList.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('todolist_edit', { 'id': todoList.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            <li class="list-group-item clearfix">
+                <div class="pull-right">
+                    <a href="{{ path('todolist_show', { 'id': todoList.id }) }}" class="btn btn-default">Show</a>
+                    <a href="{{ path('todolist_edit', { 'id': todoList.id }) }}" class="btn btn-default">Edit</a>
+                </div>
+                <h3 class="list-group-item-heading">
+                    {{ todoList.name }}
+                </h3>
+                <div class="list-group-item-text">
+                    <p>Type: {{ todoList.type }}</p>
+                </div>
+            </li>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('todolist_new') }}">Create a new entry</a>
-        </li>
     </ul>
+
+    <div class="clearfix">
+        <a href="{{ path('todolist_new') }}" class="btn btn-default pull-right">Create a new entry</a>
+    </div>
 {% endblock %}

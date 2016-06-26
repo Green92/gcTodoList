@@ -3,34 +3,24 @@
 {% block body %}
     <h1>TodoList</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ todoList.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ todoList.name }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ todoList.type }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('todolist_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('todolist_edit', { 'id': todoList.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <div class="pull-right">
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Delete" class="btn btn-default">
+                {{ form_end(delete_form) }}
+                <a href="{{ path('todolist_edit', { 'id': todoList.id }) }}" class="btn btn-default">Edit</a>
+            </div>
+            <h3 class="list-group-item-heading">
+                {{ todoList.name }}
+            </h3>
+            <div class="list-group-item-text">
+                <p>Type: {{ todoList.type }}</p>
+            </div>
         </li>
     </ul>
+
+    <div class="clearfix">
+        <a href="{{ path('todolist_index') }}" class="btn btn-default pull-right">Back to the list</a>
+    </div>
 {% endblock %}

@@ -73,8 +73,9 @@ class TodoController extends Controller
      * @Route("/{id}", name="todo_show")
      * @Method("GET")
      */
-    public function showAction(Todo $todo)
+    public function showAction($id)
     {
+        $todo = $this->todoRepository->getById($id, '@default');
         $deleteForm = $this->createDeleteForm($todo);
 
         return $this->render('todo/show.html.twig', array(
